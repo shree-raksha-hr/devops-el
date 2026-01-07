@@ -24,7 +24,7 @@ const server = http.createServer((req, res) => {
     }
 
     res.writeHead(200, headers)
-    res.end(`Hello from Blue-Green Demo v2! Time: ${new Date()}`)
+    res.end(`Hello from Blue-Green Demo v3! Time: ${new Date()}`)
 })
 
-server.listen(3000, () => console.log('v2 running on port 3000'))
+server.listen(3000, () => console.log('v3 running on port 3000'))
