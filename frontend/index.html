@@ -22,8 +22,6 @@
     <p>Live Backend: <span id="version">Loading...</span></p>
     <div id="health" class="status info">Health Check: Loading...</div>
     <div id="api-status" class="status info">API Query (/api/status): Loading... (Simulates frontend request)</div>
-    <button onclick="manualTrigger()">Trigger Pipeline (Demo)</button>
-    <div id="spinner" class="spinner"></div>
     <p id="log" style="font-size: 12px; color: #666;">Last update: Never</p>
 
     <script>
@@ -33,7 +31,7 @@
             try {
                 const versionRes = await fetch(`${BACKEND_URL}/`);
                 const versionText = await versionRes.text();
-                document.getElementById('version').textContent = versionText.includes('v1') ? 'Blue v1 (Healthy)' : 'Green v2 (Buggy)';
+                document.getElementById('version').textContent = versionText.includes('v1') ? 'Blue v1' : 'Green v2';
 
                 const healthRes = await fetch(`${BACKEND_URL}/health`);
                 const healthText = await healthRes.text();
@@ -68,7 +66,7 @@
         }
 
         fetchStatus();
-        setInterval(fetchStatus, 5000);  // Poll every 5s
+        setInterval(fetchStatus, 5000);
     </script>
 </body>
 </html>

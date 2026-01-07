@@ -19,8 +19,8 @@ const server = http.createServer((req, res) => {
     }
 
     if (req.url === '/api/status') {
-        res.writeHead(200, headers)
-        return res.end('Status OK from v2(green)')
+        res.writeHead(400, headers)
+        return res.end('Not found! - Bug in v2')
     }
 
     res.writeHead(200, headers)
