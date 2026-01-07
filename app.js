@@ -15,16 +15,16 @@ const server = http.createServer((req, res) => {
 
     if (req.url === '/health') {
         res.writeHead(200, headers)
-        return res.end('OK from v1!')
+        return res.end('OK from v2(green)!')
     }
 
     if (req.url === '/api/status') {
         res.writeHead(200, headers)
-        return res.end('Status OK from v1')
+        return res.end('Status OK from v2(green)')
     }
 
     res.writeHead(200, headers)
-    res.end(`Hello from Blue-Green Demo v3! Time: ${new Date()}`)
+    res.end(`Hello from Blue-Green Demo v2! Time: ${new Date()}`)
 })
 
-server.listen(3000, () => console.log('v3 running on port 3000'))
+server.listen(3000, () => console.log('v2 running on port 3000'))
