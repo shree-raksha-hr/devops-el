@@ -1,20 +1,50 @@
 ---
-- hosts: local
+- name: Automate Blue-Green Deployment to Green
+  hosts: localhost  # Runs locally
+  connection: local
+  gather_facts: false
+  vars:
+    namespace: "backend"
+    deployment_name: "devops-el-green"
+    container_name: "devops-el"
+    image_tag: "shreerakshahr/devops-el:v3"  # Parameterize this
+    service_name: "devops-el-lb"
+    replicas: 1
+
   tasks:
-    - name: Update & Scale Backend Green
+    - name: Update Image in Green Deployment
       kubernetes.core.k8s:
         state: present
+        namespace: "{{ namespace }}"
         definition:
           apiVersion: apps/v1
           kind: Deployment
           metadata:
-            name: devops-el-green
-            namespace: backend
+            name: "{{ deployment_name }}"
           spec:
-            replicas: 1
             template:
               spec:
                 containers:
-                - name: devops-el
-                  image: "{{ image_tag }}"
-        kubeconfig: ~/.kube/config  # Adjust path if needed
+                  - name: "{{ container_name }}"
+                    image: "{{ image_tag }}"
+
+    - name: Scale Green Deployment to Desired Replicas
+      kubernetes.core.k8s_scale:
+        api_version: apps/v1
+        kind: Deployment
+        name: "{{ deployment_name }}"
+        namespace: "{{ namespace }}"
+        replicas: "{{ replicas }}"
+
+    - name: Patch Service Selector to Switch Traffic to Green
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"  # Service might be cluster-scoped; adjust if needed
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: "{{ service_name }}"
+          spec:
+            selector:
+              color: green
