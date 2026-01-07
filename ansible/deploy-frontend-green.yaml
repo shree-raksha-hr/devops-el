@@ -1,0 +1,15 @@
+---
+- hosts: local
+  tasks:
+    - name: Scale Frontend Green
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: frontend-green
+            namespace: frontend
+          spec:
+            replicas: 1
+        kubeconfig: ~/.kube/config

@@ -1,0 +1,137 @@
+# Backend Blue Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-el-blue
+  namespace: backend
+  labels:
+    app: devops-el
+    color: blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-el
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: devops-el
+        color: blue
+    spec:
+      containers:
+      - name: devops-el
+        image: devops-el:v1
+        ports:
+        - containerPort: 3000
+---
+# Backend Green Deployment (Idle)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-el-green
+  namespace: backend
+  labels:
+    app: devops-el
+    color: green
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: devops-el
+      color: green
+  template:
+    metadata:
+      labels:
+        app: devops-el
+        color: green
+    spec:
+      containers:
+      - name: devops-el
+        image: devops-el:v1
+        ports:
+        - containerPort: 3000
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-el-lb
+  namespace: backend
+spec:
+  type: LoadBalancer
+  selector:
+    app: devops-el
+    color: blue
+  ports:
+  - port: 80
+    targetPort: 3000
+---
+# Frontend Blue Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-blue
+  namespace: frontend
+  labels:
+    app: frontend
+    color: blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: frontend
+        color: blue
+    spec:
+      containers:
+      - name: frontend
+        image: frontend:v1
+        ports:
+        - containerPort: 80
+---
+# Frontend Green Deployment (Idle)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-green
+  namespace: frontend
+  labels:
+    app: frontend
+    color: green
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: frontend
+      color: green
+  template:
+    metadata:
+      labels:
+        app: frontend
+        color: green
+    spec:
+      containers:
+      - name: frontend
+        image: frontend:v1
+        ports:
+        - containerPort: 80
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lb
+  namespace: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+    color: blue
+  ports:
+  - port: 80
+    targetPort: 80

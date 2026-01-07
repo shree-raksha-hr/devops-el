@@ -1,0 +1,20 @@
+---
+- hosts: local
+  tasks:
+    - name: Update & Scale Backend Green
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: devops-el-green
+            namespace: backend
+          spec:
+            replicas: 1
+            template:
+              spec:
+                containers:
+                - name: devops-el
+                  image: "{{ image_tag }}"
+        kubeconfig: ~/.kube/config  # Adjust path if needed
