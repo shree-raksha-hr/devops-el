@@ -12,6 +12,9 @@
     replicas: 1
 
   tasks:
+    - name: Pull Image from Docker Hub
+      shell: docker pull {{ image_tag }}
+      
     - name: Update Image in Green Deployment
       kubernetes.core.k8s:
         state: present

@@ -1,6 +1,9 @@
 const http = require('http')
 
 const server = http.createServer((req, res) => {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     const headers = {
         'Content-Type': 'text/plain',
         'Access-Control-Allow-Origin': '*',
@@ -18,9 +21,14 @@ const server = http.createServer((req, res) => {
         return res.end('OK from v2(green)!')
     }
 
+    // if (req.url === '/api/status') {
+    //     res.writeHead(400, headers)
+    //     return res.end('Not found! - Bug in v2')
+    // }
+
     if (req.url === '/api/status') {
-        res.writeHead(400, headers)
-        return res.end('Not found! - Bug in v2')
+        res.writeHead(200, headers)
+        return res.end('OK from v2')
     }
 
     res.writeHead(200, headers)
