@@ -31,7 +31,7 @@
             try {
                 const versionRes = await fetch(`${BACKEND_URL}/`);
                 const versionText = await versionRes.text();
-                document.getElementById('version').textContent = versionText.includes('v1') ? 'Blue v1' : 'Green v2';
+                document.getElementById('version').textContent = versionText.includes('v1') ? 'Blue Version' : 'Green Version';
 
                 const healthRes = await fetch(`${BACKEND_URL}/health`);
                 const healthText = await healthRes.text();
