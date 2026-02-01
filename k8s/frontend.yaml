@@ -1,0 +1,41 @@
+# Frontend Blue Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-blue
+  namespace: frontend
+  labels:
+    app: frontend
+    color: blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+      color: blue
+  template:
+    metadata:
+      labels:
+        app: frontend
+        color: blue
+    spec:
+      containers:
+      - name: frontend
+        image: shreerakshahr/frontend:v2
+        ports:
+        - containerPort: 80
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-lb
+  namespace: frontend
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+    color: blue
+  ports:
+  - port: 80
+    targetPort: 80

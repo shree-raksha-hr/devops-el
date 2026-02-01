@@ -21,11 +21,6 @@ const server = http.createServer((req, res) => {
         return res.end('OK from v2(green)!')
     }
 
-    // if (req.url === '/api/status') {
-    //     res.writeHead(400, headers)
-    //     return res.end('Not found! - Bug in v2')
-    // }
-
     if (req.url === '/api/status') {
         res.writeHead(200, headers)
         return res.end('OK from v2')
