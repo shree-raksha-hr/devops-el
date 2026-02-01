@@ -25,8 +25,7 @@
     <p id="log" style="font-size: 12px; color: #666;">Last update: Never</p>
 
     <script>
-        //const BACKEND_URL = 'http://192.168.49.2:31351';  // e.g., http://192.168.49.2:3xxxx (from minikube service myapp-lb --url)
-	const BACKEND_URL = 'http://192.168.49.2:31351';
+        const BACKEND_URL = 'http://192.168.49.2:31680';
         async function fetchStatus() {
             try {
                 const versionRes = await fetch(`${BACKEND_URL}/`);

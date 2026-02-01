@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: devops-el
-        image: devops-el:v1
+        image: shreerakshahr/devops-el:v5
         ports:
         - containerPort: 3000
 ---
