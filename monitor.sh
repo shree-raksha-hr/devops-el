@@ -6,7 +6,7 @@ for i in {1..3}; do
   if [ $response -ne 200 ]; then
     ((error_count++))
   fi
-  sleep 10
+  sleep 1
 done
 if [ $error_count -gt 1 ]; then
   kubectl patch svc devops-el-lb -p '{"spec":{"selector":{"color":"blue"}}}' -n backend
