@@ -90,34 +90,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:v1
-        ports:
-        - containerPort: 80
----
-# Frontend Green Deployment (Idle)
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: frontend-green
-  namespace: frontend
-  labels:
-    app: frontend
-    color: green
-spec:
-  replicas: 0
-  selector:
-    matchLabels:
-      app: frontend
-      color: green
-  template:
-    metadata:
-      labels:
-        app: frontend
-        color: green
-    spec:
-      containers:
-      - name: frontend
-        image: frontend:v1
+        image: shreerakshahr/frontend:v2
         ports:
         - containerPort: 80
 ---
