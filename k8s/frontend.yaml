@@ -1,4 +1,4 @@
-# Frontend Blue Deployment
+# Frontend Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,10 +20,11 @@ spec:
         color: blue
     spec:
       containers:
-      - name: frontend
-        image: shreerakshahr/frontend:v3
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: harshavardhan873/frontend:v1
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
 ---
 # Frontend Service
 apiVersion: v1
@@ -37,5 +38,5 @@ spec:
     app: frontend
     color: blue
   ports:
-  - port: 80
-    targetPort: 80
+    - port: 80
+      targetPort: 80
